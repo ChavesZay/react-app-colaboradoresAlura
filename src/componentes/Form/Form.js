@@ -5,23 +5,26 @@ import CampoText from "../CampoText"
 import ListaOpciones from "../ListaOpciones/ListaOpciones"
 import Boton from "../Boton"
 
-const Form=()=>{
+const Form=(props)=>{
 
     const [nombre, actualizarNombre]=useState("")
     const [puesto, actualizarPuesto]=useState("")
     const [foto, actualizarFoto]=useState("")
+    const [equipo, actualizarEquipo]=useState("")
 
-
+    const{registrarColaborador, equipos}=props;
 
     const manejarEnvio=(event)=>{
         event.preventDefault();
         let datosAEnviar= {
             nombre:nombre,
             puesto:puesto,
-            foto:foto
+            foto:foto,
+            equipo
         }
+
+        registrarColaborador(datosAEnviar)
         //Aquí se puede llamar una funcionalidad para guardar datos como un fetch()
-        console.log(datosAEnviar)
     }
 
     return <section className="formulario">
@@ -46,7 +49,10 @@ const Form=()=>{
             valor={foto}  
             actualizarValor={actualizarFoto} />
             
-            <ListaOpciones  />
+            <ListaOpciones 
+             valor={equipo}
+              actualizarEquipo={actualizarEquipo}
+              equipos={equipos} />
             <Boton>Crear</Boton>
         </form>
         </section>

@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import './CampoText.css'
 const CampoText = (props)=>{
-const [valor, actualizarValor]=useState("");
+
 
 const manejarCambio=(e)=>{
   props.actualizarValor(e.target.value)
