@@ -1,25 +1,29 @@
 import { useState } from "react"
 import "./Form.css"
 
-import CampoText from "../CampoText"
+import Campo from "../Campo"
 import ListaOpciones from "../ListaOpciones/ListaOpciones"
 import Boton from "../Boton"
 
-const Form=(props)=>{
+const Form = (props) => {
 
-    const [nombre, actualizarNombre]=useState("")
-    const [puesto, actualizarPuesto]=useState("")
-    const [foto, actualizarFoto]=useState("")
-    const [equipo, actualizarEquipo]=useState("")
+    const [nombre, actualizarNombre] = useState("")
+    const [puesto, actualizarPuesto] = useState("")
+    const [foto, actualizarFoto] = useState("")
+    const [equipo, actualizarEquipo] = useState("")
 
-    const{registrarColaborador, equipos}=props;
+    const [titulo, actualizarTitulo] = useState("")
+    const [color, actualizarColor] = useState("")
 
-    const manejarEnvio=(event)=>{
+
+    const { registrarColaborador, equipos,crearEquipo } = props;
+
+    const manejarEnvio = (event) => {
         event.preventDefault();
-        let datosAEnviar= {
-            nombre:nombre,
-            puesto:puesto,
-            foto:foto,
+        let datosAEnviar = {
+            nombre: nombre,
+            puesto: puesto,
+            foto: foto,
             equipo
         }
 
@@ -27,35 +31,61 @@ const Form=(props)=>{
         //Aquí se puede llamar una funcionalidad para guardar datos como un fetch()
     }
 
+    const manejarNuevoEquipo=(event)=>{
+        event.preventDefault();
+        crearEquipo({ titulo, colorPrimario: color })
+    }
+
+
+
     return <section className="formulario">
         <form onSubmit={manejarEnvio}>
             <h2>Rellena el formulario para crear el colaborador.</h2>
-           
-            <CampoText titulo="Nombre" 
-            placeholder="Ingresar nombre" 
-            required={true}
-             valor={nombre}  
-            actualizarValor={actualizarNombre}/>
 
-            <CampoText titulo="Puesto"
-             placeholder="Ingresar puesto"
-              required
-              valor={puesto}  
-              actualizarValor={actualizarPuesto}/>
-           
-            <CampoText titulo="Foto" 
-            placeholder="Ingresar enlace de foto" 
-            required
-            valor={foto}  
-            actualizarValor={actualizarFoto} />
-            
-            <ListaOpciones 
-             valor={equipo}
-              actualizarEquipo={actualizarEquipo}
-              equipos={equipos} />
+            <Campo titulo="Nombre"
+                placeholder="Ingresar nombre"
+                required={true}
+                valor={nombre}
+                actualizarValor={actualizarNombre} />
+
+            <Campo titulo="Puesto"
+                placeholder="Ingresar puesto"
+                required
+                valor={puesto}
+                actualizarValor={actualizarPuesto} />
+
+            <Campo titulo="Foto"
+                placeholder="Ingresar enlace de foto"
+                required
+                valor={foto}
+                actualizarValor={actualizarFoto} />
+
+            <ListaOpciones
+                valor={equipo}
+                actualizarEquipo={actualizarEquipo}
+                equipos={equipos} />
             <Boton>Crear</Boton>
         </form>
-        </section>
+
+        <form onSubmit={manejarNuevoEquipo}>
+            <h2>Rellena el formulario para crear el equipo.</h2>
+
+            <Campo titulo="Titulo"
+                placeholder="Ingresar titulo"
+                required={true}
+                valor={titulo}
+                actualizarValor={actualizarTitulo} />
+
+            <Campo titulo="Color"
+                placeholder="Ingresar el color en Hex"
+                required
+                valor={color}
+                actualizarValor={actualizarColor} 
+                type="color"/>
+                <Boton>Registrar Equipo</Boton>
+        </form>
+
+    </section>
 }
 //<Boton>Crear</Boton> ->Otra forma de enviar propiedades por los "children"
 
